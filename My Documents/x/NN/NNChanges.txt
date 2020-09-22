@@ -1,0 +1,50 @@
+This work has been based heavly upon the work done by Ulli. Check out the rest of his work on planet source code (www.planetsourcecode.com) (Update as of v1.0.3, Ulli's code cannot be found on line :[  Email me if you would like a copy of his code, as I have one.)
+
+HOW TO USE:
+The debug window will give you a list of untrained results and a list of trained results. We are giving the NN two numbers that are each either 0 or 1. Then we expect five out puts telling us the Xor, And, Or, <, and > comparisons of the two values.
+Since we already know what the expected output is we can "slap the wrist" of the NN when it is wrong and it will adjust it's dendrite connections until it gives us the output we expect.
+
+
+
+NN Changes:
+v1.0.4
+Added NoiseFactor.
+Added Momentum. Example program now displays two NNs, one trained without Momentum, one with.
+Modified GetRand to default to 1 if the number is too large (where before it would default to 0.)
+InitializeNN changed to ConstructNN.
+AdjustWeights Function renamed to Train, and orginal Train function (simply referred to AdjustWeights) removed.
+TransferFunction renamed to SigmoidSquash.
+Did some reordering of the code for readability.
+
+v1.0.3
+Modified GetRand function. Now produces a more even random spread between 1 and -1.
+Modified ExportNN function. Now it actually works! (=Þ) NOTE: Does not save MemBank information (as the MemBanks are non-functional right now.)
+Added ImportNN function. Atlast! NOTE: Does not import MemBank information (as the MemBanks are non-functional right now.) NOTE: Even though I use binary reads/writes to the file, There is a small amount of rounding from export to import.
+
+
+v1.0.2
+Train function only does the back propigation. You must specify SetInput before running Train. (I found that I would get the NN's out put, decide if it was good or wrong, then train it or use the output. I was processing the input twice every time I trained it once...)(it is also possible now to set the input once, train it, then refresh and train again without reestablishing the input.)
+Changed spelling of InitalizeNN to InitializeNN :P
+ExportNN to file added
+
+v1.0.1
+I have added the basic coding for the memory banks. The example here is, like before, comparing two values and giving 5 seperate outputs (Xor, And, Or, <, >). Only difference is that now the NN is expected to remember the last input value and compare it with the current input value.
+BUGS: Well, not necessarely a bug, but a logic problem. The neurons of the MemBanks do not train properly. I have posted this incomplete source inorder to inspire others trying to do the same. Hopefully we can work out a method to properly train memory within the NN. Please contact me if you have any further ideas.
+
+
+v1.0
+I'm not a big fan of classes, due to their initial overhead requirements, and the biggest change I have done to Ulli's code was remove most of the classes. Since I believe there would be no real application for any of the individual classes other than the base Net class (now cNN in my code), I reduced them all down into one class (cNN). I'm not sure if this is faster or not, but I'm sure it reduces the overhead.
+Dendrites class removed and replaced with an array of type cDendrite
+Changed Dendrite.TransferWeight to ConnectionStrength
+Changed Dendrite.ConnectedTo to ConnectionTarget
+cNeuron.Activate method changed to cNeuron.Refresh
+Changed cLayer.PreviousLayer to AdjacentLayers() (Prep for future development of 3d net layout idea)
+Changed cNet to cNN (heh... sortof ironic name now that I think of it... CNN the news network... neural network works with information... Okay. Just call me a freak.)                                                                    
+*** Did some testing, found my version (v1.0) to be about 17% faster on the average when running 25,000 psudo-random trains. (Array structure: 2, 7, 5; Randseed: 12345)
+
+
+-----------------
+Coming real soon:
+
+Memory banks - NN can save and retreive information it deems valuable. (Imagine: a NN that, when refreshed severaltimes, can look at it's memory and devise new information from it aside from what is directly in its input nodes. It would be capable of saving information it creates into the memory bank, basically emulating thought and imagination.:) :) :) UPDATE: (as of v1.0.3) I have the base coding done, but it is non-functional and needs some more thinking through. I will put this on hold for now until I come up with something better or just refine what I have.
+Chess Mod - We evaluate only a few moves each turn and can quickly come up with a decent move. The Alpha-Beta alogrythm must evaluate thousands of moves to find one good one. I beleive that a well trained (and large) NN with the ability to remember and think out moves will be capable of intutitavely playing chess much like we do. UPDATE: (as of v1.0.3) I have created the code, and it is available on PSC. For now it only traines the NN using a base rule function set. When the NN tries to move, it is validated. If it is not a valid move then the NN is "shown" all the valid moves, and trained on them.
